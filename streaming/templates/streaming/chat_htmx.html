@@ -1,0 +1,143 @@
+<!-- streaming/templates/streaming/chat_htmx.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat Htmx</title>
+    {% load static %}
+    <!-- <script src="https://unpkg.com/htmx.org@2.1.0"></script> -->
+    <script src="https://unpkg.com/htmx.org@2.0.0-beta1/dist/htmx.min.js"></script>
+    <script src="https://unpkg.com/htmx-ext-sse@2.1.0/sse.js"></script>
+    <!-- <script src="https://unpkg.com/htmx.org@1.9.12"
+        integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/sse.js"></script> -->
+</head>
+
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <h1>Chat with Bot (Htmx Version)</h1>
+    <form hx-post="{% url 'chat_view' %}" hx-target="#chat-feed" hx-swap="beforeend">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+    <div id="chat-feed" hx-ext="sse" sse-connect="{% url 'sse_endpoint' %}" hx-swap="beforeend" sse-swap="ResponseEvent"
+        style="white-space: pre;"></div>
+</body>
+
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    {% load static %}
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/sse.js"></script>
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <h1>Chat with Bot</h1>
+    <form hx-post="{% url 'chat_view' %}" hx-trigger="submit" hx-sse="{connect: '{% url 'sse_endpoint' %}'}" hx-target="#chat-area" hx-swap="beforeend">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+    <div id="chat-area" hx-ext="sse" sse-connect="{% url 'sse_endpoint' %}" hx-swap="beforeend">
+        <div sse-swap="message">
+        </div>
+    </div>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    {% load static %}
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/sse.js"></script>
+</head>
+<body>
+    <h1>Chat with Bot</h1>
+    <form hx-post="{% url 'chat_view' %}" hx-trigger="submit" hx-sse="{connect: '{% url 'sse_endpoint' %}'}" hx-target="#chat-area" hx-swap="beforeend">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+    <div id="chat-area"></div>
+</body>
+</html> -->
+
+
+<!-- streaming/templates/streaming/chat.html -->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    {% load static %}
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/sse.js"></script>
+</head>
+<body>
+    <h1>Chat with Bot</h1>
+    <form hx-post="{% url 'chat_view' %}" hx-target="#chat-area" hx-swap="beforeend">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+    <div id="chat-area"></div>
+    <script>
+        const eventSource = new EventSource("{% url 'sse_endpoint' %}");
+        eventSource.onmessage = function(event) {
+            const chatArea = document.getElementById('chat-area');
+            const newMessage = document.createElement('div');
+            newMessage.textContent = event.data;
+            chatArea.appendChild(newMessage);
+        };
+    </script>
+</body>
+</html> -->
+
+
+<!-- streaming/templates/streaming/chat.html -->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    {% load static %}
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/sse.js"></script>
+</head>
+<body>
+    <h1>Chat with Bot</h1>
+    <form hx-post="{% url 'chat_view' %}" hx-target="#chat-area" hx-swap="beforeend" hx-ext="sse" sse-swap="message">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+    <div id="chat-area"></div>
+</body>
+</html> -->
+
+<!-- streaming/templates/streaming/chat.html ### JAVASCRIPT VERSION ### -->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    {% load static %}
+</head>
+<body>
+    <h1>Chat with Bot</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+    
+    <div id="chat-area"></div>
+    
+    <script src="{% static 'streaming/chat.js' %}"></script>
+</body>
+</html> -->

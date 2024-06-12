@@ -1,0 +1,9 @@
+.env
+.local.env
+db.sqlite3
+
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+__pycache__

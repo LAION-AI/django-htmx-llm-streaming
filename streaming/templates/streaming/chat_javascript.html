@@ -1,0 +1,20 @@
+<!-- streaming/templates/streaming/chat_javascript.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    {% load static %}
+</head>
+<body>
+    <h1>Chat with Bot (Vanilla Javascript)</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+    
+    <div id="chat-area" style="white-space: pre;"></div>
+    
+    <script src="{% static 'streaming/chat.js' %}"></script>
+</body>
+</html>
